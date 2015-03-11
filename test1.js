@@ -48,7 +48,7 @@
 
   init = function() {
     $.getJSON('http://api3.libcal.com/api_hours_grid.php?iid=1287&format=json&weeks=52&callback=?', function(data) {
-      var address1, address2, category, contacts, currentlyOpen, d, day, email, i, name, phone, tmz, weekday, _i, _ref;
+      var address1, address2, category, contacts, currOpenTime, currentlyOpen, d, day, email, i, name, phone, tmz, weekday, _i, _ref;
       d = new Date();
       day = d.getDay();
       weekday = new Array(7);
@@ -73,11 +73,15 @@
         contacts = contacts.substring(contacts.indexOf(";") + 1).trim();
         address2 = contacts.trim();
         currentlyOpen = data.locations[i].weeks[0][weekday[day]].times.currently_open ? "OPEN" : "CLOSED";
+        currOpenTime = data.locations[i].weeks[0][weekday[day]].times.status;
+        //if (currOpenTime === "open") {
+        //  alert("" + currOpenTime);
+        //}
         root.hours[i] = new HoursLibcal(name, category, phone, email, address1, address2, tmz);
       }
     });
   };
 
   init();
-
+  alert(""+root.hours[0].name);
 }).call(this);
